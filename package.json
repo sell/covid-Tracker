@@ -1,7 +1,7 @@
 {
   "name": "covid-19",
   "version": "0.1.0",
-  "homepage": "http://jayson.codes/covid-19-tracker/",
+  "homepage": "https://sell.github.io/covid-19-tracker",
   "private": true,
   "dependencies": {
     "@testing-library/jest-dom": "^4.2.4",
