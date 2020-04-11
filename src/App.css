@@ -1,6 +1,19 @@
 .App {
   text-align: center;
 }
+.no-dec{
+  text-decoration: none;
+  color: rgba(255,255,255,.5);
+}
+.no-dec:hover{
+  color: rgba(255,255,255,1);
+  text-decoration: none;
+}
+.body {
+  overflow-x: hidden;
+  padding: 10px;
+}
+
 
 .App-logo {
   height: 40vmin;

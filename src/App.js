@@ -5,22 +5,32 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import axios from "axios";
 import CardColumns from "react-bootstrap/CardColumns";
 import Columns from "react-columns";
-import Form from "react-bootstrap/Form"
-
+import Form from "react-bootstrap/Form";
+import Navbar from 'react-bootstrap/Navbar';
+import Nav from 'react-bootstrap/Nav';
+import NavDropdown from 'react-bootstrap/NavDropdown';
+import './App.css';
+import donate from './donate';
+import {Route, Link} from 'react-router-dom'
+import Container from 'react-bootstrap/Container'
+import Alert from 'react-bootstrap/Alert'
 
 function App() {
   const [latest, setLatest] = useState([]);
   const [results, setResults] = useState([]);
+  const [USA, setCases] = useState([]);
   const [searchCountries, setSearchCountries] = useState("");
   useEffect(() => {
     axios
      .all([
        axios.get("https://corona.lmao.ninja/all"),
-       axios.get("https://corona.lmao.ninja/countries")
+       axios.get("https://corona.lmao.ninja/countries"),
+       axios.get("https://corona.lmao.ninja/countries/USA")
      ])
      .then(responseArr => {
        setLatest(responseArr[0].data);
        setResults(responseArr[1].data)
+       setCases(responseArr[2].data)
      })
      .catch(err => {
        console.log(err)
@@ -64,10 +74,32 @@ function App() {
   }];
   return (
     <div>
+      <Navbar bg="dark" variant="dark" expand="lg">
+        <Navbar.Brand href="#home">Covid-19 tracker</Navbar.Brand>
+        <Navbar.Toggle aria-controls="basic-navbar-nav" />
+        <Navbar.Collapse id="basic-navbar-nav">
+         <Nav className="mr-auto">
+          <Nav.Link href="/">Home</Nav.Link>
+          <Nav.Link href="#donate"><Link to="/donate" className="no-dec">Donate</Link></Nav.Link>
+          <NavDropdown title="Resources" id="basic-nav-dropdown">
+            <NavDropdown.Item href="/donate">Action</NavDropdown.Item>
+            <NavDropdown.Item href="#action/3.2">Another action</NavDropdown.Item>
+            <NavDropdown.Item href="#action/3.3">Something</NavDropdown.Item>
+              <NavDropdown.Divider />
+            <NavDropdown.Item href="#action/3.4">Separated link</NavDropdown.Item>
+          </NavDropdown>
+        </Nav>
+        </Navbar.Collapse>
+      </Navbar>
+      <div className="body">
+      <Alert variant="danger">
+        United States Currently has the most cases with {USA.cases}
+      </Alert>
+      <Container>
       <CardDeck>
         <Card className="text-center" bg="secondary" text="white" style={{margin: "10px"}}>
           <Card.Body>
-            <Card.Title>Cases</Card.Title>
+            <Card.Title>Total Cases</Card.Title>
               <Card.Text>
                 {latest.cases}
               </Card.Text>
@@ -78,7 +110,7 @@ function App() {
         </Card>
         <Card className="text-center" bg="danger" text={"white"} style={{margin: "10px"}}>
           <Card.Body>
-            <Card.Title>Deaths</Card.Title>
+            <Card.Title>Total Deaths</Card.Title>
               <Card.Text>
                 {latest.deaths}
               </Card.Text>
@@ -89,7 +121,7 @@ function App() {
         </Card>
         <Card className="text-center" bg="success" text={"white"} style={{margin: "10px"}}>
           <Card.Body>
-            <Card.Title>Recovered</Card.Title>
+            <Card.Title>Total Recovered</Card.Title>
               <Card.Text>
                 {latest.recovered}
               </Card.Text>
@@ -101,13 +133,18 @@ function App() {
       </CardDeck>
       <Form>
         <Form.Group controlId="formGroupSearch">
-          <Form.Label>Search</Form.Label>
-          <Form.Control type="text" placeholder="Search a Country" onChange={e => setSearchCountries(e.target.value)} />
+          <Form.Label>Seach a Country (capitalize first letter, working on a fix)</Form.Label>
+          <Form.Control type="text" className="search" placeholder="Search a Country" onChange={e => setSearchCountries(e.target.value)} />
         </Form.Group>
       </Form>
       <Columns queries={queries}>
         {countries}
       </Columns>
+      <div id="#donate">
+      <Route exact path="/donate" component={donate} />
+      </div>
+      </Container>
+      </div>
     </div>
   );
 }
