@@ -14,6 +14,7 @@ import donate from './donate';
 import {Route, Link} from 'react-router-dom'
 import Container from 'react-bootstrap/Container'
 import Alert from 'react-bootstrap/Alert'
+import Badge from 'react-bootstrap/Badge'
 
 function App() {
   const [latest, setLatest] = useState([]);
@@ -81,7 +82,7 @@ function App() {
     <Nav className="mr-auto">
       <Nav.Link href="#features">Home</Nav.Link>
       <Nav.Link href="#donate">Donate</Nav.Link>
-      <Nav.Link href="#github">Donate</Nav.Link>
+      <Nav.Link href="#github">Github <Badge variant="success">Source Code</Badge> </Nav.Link>
     </Nav>
   </Navbar.Collapse>
 </Navbar>
@@ -134,15 +135,6 @@ function App() {
       <Columns queries={queries}>
         {countries}
       </Columns>
-      <section id="github">
-      <Alert variant="success">
-  <Alert.Heading>Link to the Github Repo</Alert.Heading>
-  <hr />
-  <p className="mb-0">
-    <a href="https://github.com/sell/covid-Tracker">https://github.com/sell/covid-Tracker</a>
-  </p>
-</Alert>
-      </section>
       <div id="#donate">
       <Route exact path="/donate" component={donate} />
       </div>
