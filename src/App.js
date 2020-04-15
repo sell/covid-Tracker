@@ -82,7 +82,7 @@ function App() {
     <Nav className="mr-auto">
       <Nav.Link href="#features">Home</Nav.Link>
       <Nav.Link href="#donate">Donate</Nav.Link>
-      <Nav.Link href="#github">Github <Badge variant="success">Source Code</Badge> </Nav.Link>
+      <Nav.Link href="https://github.com/sell/covid-Tracker">Github <Badge variant="success">Source Code</Badge> </Nav.Link>
     </Nav>
   </Navbar.Collapse>
 </Navbar>
