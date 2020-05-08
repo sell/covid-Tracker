@@ -15,6 +15,8 @@ import {Route, Link} from 'react-router-dom'
 import Container from 'react-bootstrap/Container'
 import Alert from 'react-bootstrap/Alert'
 import Badge from 'react-bootstrap/Badge'
+import CountUp from 'react-countup'
+import {Typography} from '@material-ui/core'
 
 function App() {
   const [latest, setLatest] = useState([]);
@@ -51,19 +53,19 @@ function App() {
         <Card.Img variant="top" src={data.countryInfo.flag} />
         <Card.Body>
           <Card.Title>{data.country}</Card.Title>
-          <Card.Text>Cases {data.cases}</Card.Text>
-          <Card.Text>Deaths {data.deaths}</Card.Text>
-          <Card.Text>Recovered {data.recovered}</Card.Text>
-          <Card.Text>Today's Cases {data.todayCases}</Card.Text>
-          <Card.Text>Today's Deaths {data.todayDeaths}</Card.Text>
-          <Card.Text>Active {data.active}</Card.Text>
-          <Card.Text>Critical {data.critical}</Card.Text>
+          <Card.Text>Cases: {data.cases}</Card.Text>
+          <Card.Text>Deaths: {data.deaths}</Card.Text>
+          <Card.Text>Recovered: {data.recovered}</Card.Text>
+          <Card.Text>Today's Cases: {data.todayCases}</Card.Text>
+          <Card.Text>Today's Deaths: {data.todayDeaths}</Card.Text>
+          <Card.Text>Active: {data.active}</Card.Text>
+          <Card.Text>Critical: {data.critical}</Card.Text>
         </Card.Body>
       </Card>
     );
   });
 
-
+  const zero = 0
 
   var queries = [{
     columns: 2,
@@ -80,15 +82,14 @@ function App() {
   <Navbar.Toggle aria-controls="responsive-navbar-nav" />
   <Navbar.Collapse id="responsive-navbar-nav">
     <Nav className="mr-auto">
-      <Nav.Link href="#features">Home</Nav.Link>
-      <Nav.Link href="#donate">Donate</Nav.Link>
+      <Nav.Link href="/">Home</Nav.Link>
       <Nav.Link href="https://github.com/sell/covid-Tracker">Github <Badge variant="success">Source Code</Badge> </Nav.Link>
     </Nav>
   </Navbar.Collapse>
 </Navbar>
       <div className="body">
       <Alert className="container" variant="danger">
-        United States Currently has the most cases with {USA.cases}
+        United States Currently has the most cases with: <strong className="">{USA.cases && <CountUp start={0} duration={2.5} end={USA.cases} />}</strong>
       </Alert>
       <Container>
       <CardDeck>
@@ -96,40 +97,40 @@ function App() {
           <Card.Body>
             <Card.Title>Total Cases</Card.Title>
               <Card.Text>
-                {latest.cases}
+              {latest.cases && <CountUp start={0} duration={2.5} end={latest.cases} />}
               </Card.Text>
           </Card.Body>
           <Card.Footer>
-            <small>Last updated {lastUpdated}</small>
+            <small>Last updated: {lastUpdated}</small>
           </Card.Footer>
         </Card>
         <Card className="text-center" bg="danger" text={"white"} style={{margin: "10px"}}>
           <Card.Body>
             <Card.Title>Total Deaths</Card.Title>
               <Card.Text>
-                {latest.deaths}
+                {latest.deaths && <CountUp start={0} duration={2.5} end={latest.deaths} />}
               </Card.Text>
           </Card.Body>
           <Card.Footer>
-            <small>Last updated {lastUpdated}</small>
+            <small>Last updated: <strong>{new Date(lastUpdated).toDateString()}</strong></small>
           </Card.Footer>
         </Card>
         <Card className="text-center" bg="success" text={"white"} style={{margin: "10px"}}>
           <Card.Body>
             <Card.Title>Total Recovered</Card.Title>
               <Card.Text>
-                {latest.recovered}
+                {latest.recovered && <CountUp start={0} duration={2.5} end={latest.recovered} />}
               </Card.Text>
           </Card.Body>
           <Card.Footer>
-            <small>Last updated {lastUpdated}</small>
+            <small>Last updated: {lastUpdated}</small>
           </Card.Footer>
         </Card>
       </CardDeck>
       <Form>
         <Form.Group controlId="formGroupSearch">
-          <Form.Label>Seach a Country (capitalize first letter, working on a fix)</Form.Label>
-          <Form.Control type="text" className="search" placeholder="Search a Country" onChange={e => setSearchCountries(e.target.value)} />
+          <Form.Label style={{color: 'white'}}>Find any country you would like!</Form.Label>
+          <Form.Control type="text" className="search" placeholder="Search a Country" onChange={e => setSearchCountries(e.target.value)} style={{textTransform: 'capitalize'}} />
         </Form.Group>
       </Form>
       <Columns queries={queries}>
@@ -145,3 +146,6 @@ function App() {
 }
 
 export default App;
+
+
+

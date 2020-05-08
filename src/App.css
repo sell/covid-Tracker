@@ -1,6 +1,10 @@
 .App {
   text-align: center;
 }
+#root {
+  background-color: #212529;
+  min-height: 100vh;
+}
 .no-dec{
   text-decoration: none;
   color: rgba(255,255,255,.5);
